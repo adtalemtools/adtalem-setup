@@ -1,0 +1,129 @@
+# Update the hostname to the local development environment hostname.
+vagrant_hostname: adtalem.local
+vagrant_machine_name: adtalem
+vagrant_memory: 4096
+vagrant_cpus: 2
+
+# Set the IP address so it doesn't conflict with other Drupal VM instances.
+vagrant_ip: 192.168.234.175
+
+# Use Ubuntu 16.04 LTS to match Acquia Cloud environments.
+vagrant_box: geerlingguy/ubuntu1604
+workspace: /root
+
+# Set drupal_site_name to the project's human-readable name.
+drupal_site_name: "BLTed 8"
+
+# Provide the path to the project root to Vagrant.
+vagrant_synced_folders:
+  # Set the local_path for the first synced folder to `.`.
+  - local_path: .
+    destination: /var/www/adtalem
+    type: virtualbox
+    options_override:
+      owner: "vagrant"
+      group: "www-data"
+      mount_options: ["dmode=775,fmode=764"]
+  # Set the /vagrant path to avoid the issue where drupal-vm tries mounting with nfs, which fails
+  - local_path: .
+    destination: /vagrant
+    type: virtualbox
+
+drupal_build_composer_project: false
+# Toggling this to `true` would invoke `composer install` with the
+# projects own `composer.json` successfully.
+drupal_build_composer: false
+drupal_composer_path: false
+drupal_composer_install_dir: "/var/www/adtalem"
+drupal_core_path: "/var/www/adtalem/docroot"
+ssh_home: /var/www/adtalem
+
+# Multisite installations should configure additional databases here.
+# It's recommended to prefix database names with 'drupal'. Otherwise,
+# you'll need to add additional users in the 'mysql_users' section.
+mysql_databases:
+  - name: drupal
+    encoding: utf8
+    collation: utf8_general_ci
+#  - name: drupal_two
+#    encoding: utf8
+#    collation: utf8_general_ci
+
+mysql_users:
+  - name: drupal
+    host: "%"
+    password: drupal
+    priv: "drupal%.*:ALL"
+
+# Set this to 'false' if you don't need to install drupal (using the drupal_*
+# settings below), but instead copy down a database (e.g., using drush sql-sync).
+drupal_install_site: false
+
+# Drupal VM automatically creates a drush alias file in your ~/.drush folder if
+# this variable is 'true'.
+configure_drush_aliases: false
+
+# This is required for front-end building tools.
+nodejs_version: "6.x"
+nodejs_npm_global_packages:
+  - name: bower
+  - name: gulp-cli
+  - name: yarn
+nodejs_install_npm_user: "{{ drupalvm_user }}"
+npm_config_prefix: "/home/{{ drupalvm_user }}/.npm-global"
+installed_extras: [adminer, selenium, drush, mailhog, memcached, nodejs, solr, xdebug]
+
+# PHP 7.1.
+php_version: "7.1"
+php_packages_extra:
+  - "php{{ php_version }}-bz2"
+  - "php{{ php_version }}-imagick"
+  - imagemagick
+  - "php{{ php_version }}-soap"
+  - "php{{ php_version }}-bcmath"
+
+# XDebug configuration.
+php_xdebug_version: 2.5.0
+# Change this value to 1 in order to enable xdebug by default.
+php_xdebug_default_enable: 0
+php_xdebug_coverage_enable: 0
+php_xdebug_cli_disable: yes
+php_xdebug_remote_enable: 1
+php_xdebug_remote_connect_back: 1
+# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
+php_xdebug_idekey: PHPSTORM
+php_xdebug_max_nesting_level: 256
+php_xdebug_remote_port: "9000"
+php_memory_limit: "4096M"
+
+solr_version: "5.5.3"
+
+# Disable APC to avoid odd caching issues.
+php_enable_apc: false
+
+pre_provision_tasks_dir:
+  - "../../../../box/pre_provision/pre-provision.yml"
+
+post_provision_scripts:
+  - "../../../acquia/blt/scripts/drupal-vm/post-provision.php"
+
+post_provision_tasks_dir:
+  - "../../../../box/post_provision/post-provision.yml"
+
+apache_vhosts:
+  - servername: "adminer.{{ vagrant_hostname }}"
+    documentroot: "{{ adminer_install_dir }}"
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
+
+  - servername: "xhprof.{{ vagrant_hostname }}"
+    documentroot: "{{ php_xhprof_html_dir }}"
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
+
+  - servername: "pimpmylog.{{ vagrant_hostname }}"
+    documentroot: "{{ pimpmylog_install_dir }}"
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"
+
+  - servername: "{{ vagrant_ip }}"
+    serveralias: "dashboard.{{ vagrant_hostname }}"
+    documentroot: "{{ dashboard_install_dir }}"
+    extra_parameters: "{{ apache_vhost_php_fpm_parameters }}"

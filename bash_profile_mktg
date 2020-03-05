@@ -1,0 +1,4 @@
+source ~/.profile
+source ~/.setup_vars
+
+bash /var/www/adtalem/scripts/setup-sync.sh
