@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/CMS-Drupal-Setup-Scripts/.setup_vars
+source ~/adtalem-setup/.setup_vars
 
 YELLOW='\033[0;33m'
 GREEN='\033[0;32m'
@@ -22,9 +22,9 @@ echo -e "${LIGHTBLUE}Select SYNC to refresh local site data only, select RELOAD 
 options=("SYNC" "REBUILD")
 select refresh in "${options[@]}"; do
     REFRESHTYPE='MYREFRESH="'$reftype'"'
-    echo $REFRESHTYPE >> ~/CMS-Drupal-Setup-Scripts/.setup_vars;
+    echo $REFRESHTYPE >> ~/adtalem-setup/.setup_vars;
   case "$reftype,$REPLY" in
-    SYNC,*|*,SYNC)     bash ~/CMS-Drupal-Setup-Scripts/refresh-sync-vm.sh; break ;;
-    REBUILD,*|*,REBUILD)     bash ~/CMS-Drupal-Setup-Scripts/refresh-reload-vm.sh; break ;;
+    SYNC,*|*,SYNC)     bash ~/adtalem-setup/refresh-sync-vm.sh; break ;;
+    REBUILD,*|*,REBUILD)     bash ~/adtalem-setup/refresh-reload-vm.sh; break ;;
   esac
 done

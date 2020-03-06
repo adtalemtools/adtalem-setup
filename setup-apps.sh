@@ -15,7 +15,7 @@ echo -e "${BLUE}Checking for Homebrew, Virtualbox, Vagrant, Pip, Ansible, Ruby, 
 # Install Xcode Command Line Tools
 if ! xcode_loc="$(type -p xcode-select -p)" || [[ -z $xcode_loc ]]; then
     NOXCODE='NOXCODE="Xcode"'
-    echo $NOXCODE >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOXCODE >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Xcode Command Line Tools are not installed. ${NC}"
     NOXCODE=""
 fi
@@ -23,7 +23,7 @@ fi
 # Install Ruby
 if ! ruby_loc="$(type -p "brew")" || [[ -z $ruby_loc ]]; then
     NORUBY='NORUBY="Ruby"'
-    echo $NORUBY >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NORUBY >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Ruby is not installed. ${NC}"
     NORUBY=""
 fi
@@ -31,7 +31,7 @@ fi
 # Install Homebrew
 if ! brew_loc="$(type -p "brew")" || [[ -z $brew_loc ]]; then
     NOHOMEBREW='NOHOMEBREW="Homebrew"'
-    echo $NOHOMEBREW >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOHOMEBREW >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Homebrew is not installed. ${NC}"
     NOHOMEBREW=""
 fi
@@ -39,7 +39,7 @@ fi
 # Install Virtualbox >=5.1.14
 if ! vb_loc="$(type -p "VBoxmanage")" || [[ -z $vb_loc ]]; then
     NOVBOX='NOVBOX="Virtualbox"'
-    echo $NOVBOX >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOVBOX >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Virtualbox is not installed. ${NC}"
     NOVBOX=""
 fi
@@ -47,7 +47,7 @@ fi
 # Install Vagrant >=1.8.6
 if ! vagrant_loc="$(type -p "vagrant")" || [[ -z $vagrant_loc ]]; then
     NOVAGRANT='NOVAGRANT="Vagrant"'
-    echo $NOVAGRANT >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOVAGRANT >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Vagrant is not installed. ${NC}"
     NOVAGRANT=""
 fi
@@ -55,7 +55,7 @@ fi
 # Install pip
 if ! pip_loc="$(type -p "pip")" || [[ -z $pip_loc ]]; then
     NOPIP='NOPIP="pip"'
-    echo $NOPIP >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOPIP >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}pip is not installed. ${NC}"
     NOPIP=""
 fi
@@ -63,7 +63,7 @@ fi
 # Install Ansible
 if ! ansible_loc="$(type -p "ansible")" || [[ -z $ansible_loc ]]; then
     NOANSIBLE='NOANSIBLE="Ansible"'
-    echo $NOANSIBLE >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOANSIBLE >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Ansible is not installed. ${NC}"
     NOANSIBLE=""
 fi
@@ -71,39 +71,39 @@ fi
 # Install Composer
 if ! composer_loc="$(type -p "composer")" || [[ -z $composer_loc ]]; then
     NOCOMPOSER='NOCOMPOSER="Composer"'
-    echo $NOCOMPOSER >> ~/CMS-Drupal-Setup-Scripts/.app_vars
+    echo $NOCOMPOSER >> ~/adtalem-setup/.app_vars
     echo -e "${YELLOW}Composer is not installed. ${NC}"
     NOCOMPOSER=""
 fi
 
-if [ ! -f ~/CMS-Drupal-Setup-Scripts/.app_vars ]; then
+if [ ! -f ~/adtalem-setup/.app_vars ]; then
 echo -e "${LIGHTBLUE}No applications need to be installed. ${NC}"
-   bash ~/CMS-Drupal-Setup-Scripts/setup-stack.sh
+   bash ~/adtalem-setup/setup-stack.sh
 fi
 
-source ~/CMS-Drupal-Setup-Scripts/.app_vars
+source ~/adtalem-setup/.app_vars
 
 echo -e "\n"
 echo -e "Would you like to install these required applications?"
 echo -e "\n"
 read -p "$NORUBY $NOXCODE $NOHOMEBREW $NOVBOX $NOVAGRANT $NOPIP $NOANSIBLE $NOCOMPOSER (y/N)" choice1
-[[ "$choice1" == [Yy]* ]] && sleep 2 || bash ~/CMS-Drupal-Setup-Scripts/setup-stack.sh
+[[ "$choice1" == [Yy]* ]] && sleep 2 || bash ~/adtalem-setup/setup-stack.sh
 
-if ["$NORUBY" == "Ruby"]
+if [ "$NORUBY" == "Ruby" ]
 then
 echo -e "${BLUE}INSTALLING RUBY...${NC}"
 xcode-select --install 2> /dev/null
 echo -e "${GREEN}Ruby is installed.${NC}"
 fi
 
-if ["$NOXCODE" == "Xcode"]
+if [ "$NOXCODE" == "Xcode" ]
 then
 echo -e "${BLUE}INSTALLING XCODE TOOLS...${NC}"
 xcode-select --install 2> /dev/null
 echo -e "${GREEN}XCODE TOOLS is installed.${NC}"
 fi
 
-if ["$NOHOMEBREW" == "Homebrew"]
+if [ "$NOHOMEBREW" == "Homebrew" ]
 then
 echo -e "${BLUE}INSTALLING HOMEBREW...${NC}"
 xcode-select --install 2> /dev/null
@@ -115,34 +115,34 @@ echo -e "\n"
 echo -e "${GREEN}Homebrew is installed. ${NC}"
 fi
 
-if ["$NOVBOX" == "Virtualbox"]
+if [ "$NOVBOX" == "Virtualbox" ]
 then
 echo -e "${BLUE}INSTALLING VIRTUALBOX...${NC}"
 brew cask install virtualbox 2> /dev/null
 echo -e "${GREEN}Virtualbox is installed.${NC}"
 fi
 
-if ["$NOVAGRANT" == "Vagrant"]
+if [ "$NOVAGRANT" == "Vagrant" ]
 then
 echo -e "${BLUE}INSTALLING VAGRANT...${NC}"
 brew cask install vagrant 2> /dev/null
 echo -e "${GREEN}Vagrant is installed. ${NC}"
 fi
 
-if ["$NOPIP" == "Pip"]
+if [ "$NOPIP" == "Pip" ]
 then
 echo -e "${BLUE}INSTALLING PIP...${NC}"
 sudo easy_install pip 2> /dev/null
 echo -e "${GREEN}Pip has been installed.${NC}"
 fi
 
-if ["$NOANSIBLE" == "Ansible"]
+if [ "$NOANSIBLE" == "Ansible" ]
 then
 sudo pip install ansible 2> /dev/null
 echo -e "${GREEN}Ansible is installed.${NC}\n"
 fi
 
-if ["$NOCOMPOSER" == "Composer"]
+if [ "$NOCOMPOSER" == "Composer" ]
 then
 echo -e "${BLUE}\nINSTALLING COMPOSER${NC}"
 EXPECTED_SIGNATURE="$(wget -q -O - https://composer.github.io/installer.sig)"
@@ -168,7 +168,7 @@ rm -rf composer
 ln -s ~/vms/CMS-Drupal-MKTG/vendor/bin/composer composer
 fi
 
-rm -rf ~/CMS-Drupal-Setup-Scripts/.setup_vars
+rm -rf ~/adtalem-setup/.setup_vars
 # Install local environment
 echo -e "${LIGHTBLUE}All required applications have been installed. ${NC}"
-bash ~/CMS-Drupal-Setup-Scripts/setup-stack.sh
+bash ~/adtalem-setup/setup-stack.sh

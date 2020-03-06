@@ -17,19 +17,21 @@ sleep 3
 mkdir ~/vms 2> /dev/null
 cd ~/vms/
 read -p "$(echo -e $LIGHTERBLUE"Enter the name of your Acquia/Github private key "$NC"(ex. adtalem_rsa): ")" MYPRIVATEKEY
+echo -e "\n"
 read -p "$(echo -e $LIGHTERBLUE"Enter your ATGE Github username "$NC"(ex. D********): ")"  MYDNUMBER
 read -p "$(echo -e $LIGHTERBLUE"Enter your ATGE Github access token "$NC"(from https://github.com/settings/tokens): ")" MYGITTOKEN
+echo -e "\n"
 read -p "$(echo -e $LIGHTERBLUE"Enter your Acquia Cloud API Token "$NC"(from https://cloud.acquia.com/a/profile/tokens): ")" MYACQUIATOKEN
 read -p "$(echo -e $LIGHTERBLUE"Enter your Acquia Cloud API Secret "$NC"(from https://cloud.acquia.com/a/profile/tokens): ")" MYACQUIASECRET
 
 echo -e "\n"
 
 SAVEDGITTOKEN='MYGITTOKEN="'$MYGITTOKEN'"'
-echo $SAVEDGITTOKEN >> ~/CMS-Drupal-Setup-Scripts/.setup_vars
+echo $SAVEDGITTOKEN >> ~/adtalem-setup/.setup_vars
 SAVEDACQUIATOKEN='MYACQUIATOKEN="'$MYACQUIATOKEN'"'
-echo $SAVEDACQUIATOKEN >> ~/CMS-Drupal-Setup-Scripts/.setup_vars
+echo $SAVEDACQUIATOKEN >> ~/adtalem-setup/.setup_vars
 SAVEDACQUIASECRET='MYACQUIASECRET="'$MYACQUIASECRET'"'
-echo $SAVEDACQUIASECRET >> ~/CMS-Drupal-Setup-Scripts/.setup_vars
+echo $SAVEDACQUIASECRET >> ~/adtalem-setup/.setup_vars
 
 rm -rf CMS-Drupal-ECOM
 
@@ -39,9 +41,9 @@ ssh-add ~/.ssh/"$MYPRIVATEKEY" 2> /dev/null
 
 echo -e "${BLUE}CLONING THE $MYDNUMBER/CMS-Drupal-ECOM REPOSITORY${NC}"
 git clone git@github.com:"$MYDNUMBER"/CMS-Drupal-ECOM.git
-cp ~/CMS-Drupal-Setup-Scripts/setup-sync-ecom.sh ~/vms/CMS-Drupal-ECOM/scripts/setup-sync.sh
-cp ~/CMS-Drupal-Setup-Scripts/bash_profile ~/vms/CMS-Drupal-ECOM/scripts/bash_profile
-cp ~/CMS-Drupal-Setup-Scripts/local.config-ecom.yml ~/vms/CMS-Drupal-ECOM/box/local.config.yml 
+cp ~/adtalem-setup/setup-sync-ecom.sh ~/vms/CMS-Drupal-ECOM/scripts/setup-sync.sh
+cp ~/adtalem-setup/bash_profile ~/vms/CMS-Drupal-ECOM/scripts/bash_profile
+cp ~/adtalem-setup/local.config-ecom.yml ~/vms/CMS-Drupal-ECOM/box/local.config.yml
 
 echo -e "${GREEN}$MYDNUMBER/CMS-Drupal-ECOM repository fork has been cloned.${NC}\n"
 sleep 3
@@ -109,13 +111,13 @@ composer clearcache 2> /dev/null
 echo -e "${BLUE}LOCAL ECOM CODEBASE INSTALL${NC}"
 read -e -p "Would you like to install your local codebase? (y/N)" choice1
 [[ "$choice1" == [Yy]* ]] && composer install --prefer-dist || exit 0
-cp ~/CMS-Drupal-Setup-Scripts/.setup_vars ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/blt/setup_vars
-cp ~/CMS-Drupal-Setup-Scripts/bash_profile_ecom ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/blt/bash_profile
-cp ~/CMS-Drupal-Setup-Scripts/post-provision-ecom.php ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/drupal-vm/post-provision.php
+cp ~/adtalem-setup/.setup_vars ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/blt/setup_vars
+cp ~/adtalem-setup/bash_profile_ecom ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/blt/bash_profile
+cp ~/adtalem-setup/post-provision-ecom.php ~/vms/CMS-Drupal-ECOM/vendor/acquia/blt/scripts/drupal-vm/post-provision.php
 
 echo -e "${GREEN}Local codebase has been installed.${NC}"
 sleep 3
 
 echo -e "${BLUE}LOCAL ENVIRONMENT VM INSTALL${NC}"
 read -e -p "Would you like to install your VM? (y/N)" choice2
-[[ "$choice2" == [Yy]* ]] && bash ~/CMS-Drupal-Setup-Scripts/setup-vm-ecom.sh || exit 0
+[[ "$choice2" == [Yy]* ]] && bash ~/adtalem-setup/setup-vm-ecom.sh || exit 0

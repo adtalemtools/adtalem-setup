@@ -75,13 +75,15 @@ Enter the commands below to install.
 
 ```js
 cd ~/
-git clone git@github.com:CMS-Drupal-Setup-Scripts/setup-scripts.git
+git clone git@github.com:adtalemtools/adtalem-setup.git
+
 
 ## Check Installed Software (Optional)
-bash setup-scripts/setup_apps.sh
+bash adtalem-setup/setup_apps.sh
+
 
 ## Installation
-bash setup-scripts/setup.sh
+bash adtalem-setup/setup.sh
 ```
 
 ## Refreshing and Syncing
@@ -91,6 +93,12 @@ Refresh and sync from your home directory in the OSX terminal. Enter the command
 ## Refresh Sites by Stack
 
 ```js
-bash setup-scripts/refresh-sites-mktg.sh
-bash setup-scripts/refresh-sites-ecom.sh
+<<<<<<< Updated upstream
+bash adtalem-setup/refresh-sites-mktg.sh
+bash adtalem-setup/refresh-sites-ecom.sh
 ```
+=======
+bash adtalem-setup/refresh-sites-mktg.sh
+bash adtalem-setup/refresh-sites-ecom.sh
+```
+>>>>>>> Stashed changes

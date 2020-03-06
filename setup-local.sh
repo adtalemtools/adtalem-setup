@@ -1,3 +1,3 @@
 #!/bin/bash
 
-bash ~/CMS-Drupal-Setup-Scripts/setup.sh
+bash ~/adtalem-setup/setup.sh

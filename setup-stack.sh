@@ -16,9 +16,9 @@ sleep 1
 options=("CMS-Drupal-MKTG" "CMS-Drupal-ECOM")
 select stack in "${options[@]}"; do
     SAVEDSTACK='MYSTACK="'$stack'"'
-    echo $SAVEDSTACK >> ~/CMS-Drupal-Setup-Scripts/.setup_vars;
+    echo $SAVEDSTACK >> ~/adtalem-setup/.setup_vars;
   case "$stack,$REPLY" in
-    CMS-Drupal-MKTG,*|*,CMS-Drupal-MKTG)     bash ~/CMS-Drupal-Setup-Scripts/setup-local-mktg.sh; break ;;
-    CMS-Drupal-ECOM,*|*,CMS-Drupal-ECOM)     bash ~/CMS-Drupal-Setup-Scripts/setup-local-ecom.sh; break ;;
+    CMS-Drupal-MKTG,*|*,CMS-Drupal-MKTG)     bash ~/adtalem-setup/setup-local-mktg.sh; break ;;
+    CMS-Drupal-ECOM,*|*,CMS-Drupal-ECOM)     bash ~/adtalem-setup/setup-local-ecom.sh; break ;;
   esac
 done

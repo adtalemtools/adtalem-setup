@@ -1,5 +1,5 @@
 #!/bin/bash
-source ~/CMS-Drupal-Setup-Scripts/.setup_vars
+source ~/adtalem-setup/.setup_vars
 
 # Reprovision the VM.
 cd ~/vms/$MYSTACK

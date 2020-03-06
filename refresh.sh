@@ -17,9 +17,9 @@ sleep 1
 options=("CMS-Drupal-MKTG" "CMS-Drupal-ECOM")
 select stack in "${options[@]}"; do
     REFRESHSTACK='MYSTACK="'$refstack'"'
-    echo $REFRESHSTACK >> ~/CMS-Drupal-Setup-Scripts/.setup_vars;
+    echo $REFRESHSTACK >> ~/adtalem-setup/.setup_vars;
   case "$refstack,$REPLY" in
-    CMS-Drupal-MKTG,*|*,CMS-Drupal-MKTG)     bash ~/CMS-Drupal-Setup-Scripts/refresh-local-sites.sh; break ;;
-    CMS-Drupal-ECOM,*|*,CMS-Drupal-ECOM)     bash ~/CMS-Drupal-Setup-Scripts/refresh-local-sites.sh; break ;;
+    CMS-Drupal-MKTG,*|*,CMS-Drupal-MKTG)     bash ~/adtalem-setup/refresh-local-sites.sh; break ;;
+    CMS-Drupal-ECOM,*|*,CMS-Drupal-ECOM)     bash ~/adtalem-setup/refresh-local-sites.sh; break ;;
   esac
 done
