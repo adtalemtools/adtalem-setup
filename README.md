@@ -93,12 +93,7 @@ Refresh and sync from your home directory in the OSX terminal. Enter the command
 ## Refresh Sites by Stack
 
 ```js
-<<<<<<< Updated upstream
 bash adtalem-setup/refresh-sites-mktg.sh
 bash adtalem-setup/refresh-sites-ecom.sh
 ```
-=======
-bash adtalem-setup/refresh-sites-mktg.sh
-bash adtalem-setup/refresh-sites-ecom.sh
-```
->>>>>>> Stashed changes
+
